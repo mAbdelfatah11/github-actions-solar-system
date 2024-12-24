@@ -53,9 +53,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
   
-      - name: Unit Testing
+      - name: coverage
         continue-on-error: true
-        run: npm run code-coverage      # excutes a test coverage check against code and evaluates number of lines against configured one
+        run: npm run coverage      # excutes a test coverage check against code and evaluates number of lines against configured one
         
       - uses: actions/upload-artifact@v4
         with:
