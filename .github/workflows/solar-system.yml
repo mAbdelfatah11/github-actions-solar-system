@@ -6,7 +6,12 @@ on:
     branches:
       - main
       - 'feature/*'
-    
+
+env:
+  MONGO_URI: mongodb+srv://supercluster.d83jj.mongodb.net/superData
+  MONGO_USERNAME: superuser
+  MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+
 jobs:
     unit-testing:
         name: Unit Testing
@@ -30,4 +35,4 @@ jobs:
           uses: actions/upload-artifact@v4
           with:
             name: Mocha-Test-Result
-            path: test-results.xml
+            path: test-results.xml      # path of the file to be uploaded for archiving, it will be uploaded to the github backend storage not a virtual machine 
