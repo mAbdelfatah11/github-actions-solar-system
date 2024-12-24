@@ -37,3 +37,28 @@ jobs:
           with:
             name: Mocha-Test-Result           # test result helps in defineing which test case fails while testing
             path: test-results.xml      # path of the file to be uploaded for archiving, it will be uploaded to the github backend storage not a virtual machine 
+
+    code-coverage:
+      name: code-coverage
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup NodeJS Version
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+  
+      - name: Install Dependencies
+        run: npm install
+  
+      - name: Unit Testing
+        continue-on-error: true
+        run: npm run code-coverage      # excutes a test coverage check against code and evaluates number of lines against configured one
+        
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Code-Coverage-Result          # test result helps in defineing which test case fails while testing
+          path: coverage      # path of the file to be uploaded for archiving, it will be uploaded to the github backend storage not a virtual machine 
+          retention-days: 5 
