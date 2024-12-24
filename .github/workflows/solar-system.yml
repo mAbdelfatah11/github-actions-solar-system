@@ -33,6 +33,7 @@ jobs:
           
         - name: Archive Test Result
           uses: actions/upload-artifact@v4
+          if: ${{ always() }}                  # do this step of archiving the test result whatever happens to the previous step, failure or success
           with:
-            name: Mocha-Test-Result
+            name: Mocha-Test-Result           # test result helps in defineing which test case fails while testing
             path: test-results.xml      # path of the file to be uploaded for archiving, it will be uploaded to the github backend storage not a virtual machine 
