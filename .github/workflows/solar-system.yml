@@ -62,3 +62,30 @@ jobs:
           name: Code-Coverage-Result          # test result helps in defineing which test case fails while testing
           path: coverage      # path of the file to be uploaded for archiving, it will be uploaded to the github backend storage not a virtual machine 
           retention-days: 5 
+    
+    docker:
+        name: docker
+        runs-on: ubuntu-latest
+
+    dev-deploy:
+      name: dev-deploy
+      needs: docker
+      environment:
+        name: development
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: install kubectl
+        uses: azure/setup-kubectl
+        with:
+          version: 'v1.26.0' # equal to EKS-Cluster k8s version
+      - uses: azure/k8s-set-context@v4
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+      
+      - name: verify connection to k8s cluster
+        run: | 
+          kubectl version --short -o yaml
+
