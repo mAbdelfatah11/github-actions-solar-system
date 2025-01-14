@@ -66,6 +66,8 @@ jobs:
     docker:
         name: docker
         runs-on: ubuntu-latest
+        steps:
+          - run: echo "dummy step"
     dev-deploy:
       name: dev-deploy
       needs: docker
