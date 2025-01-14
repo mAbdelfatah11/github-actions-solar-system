@@ -66,25 +66,23 @@ jobs:
     docker:
         name: docker
         runs-on: ubuntu-latest
-
     dev-deploy:
       name: dev-deploy
       needs: docker
+      runs-on: ubuntu-latest
       environment:
         name: development
-      runs-on: ubuntu-latest
       steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
       - name: install kubectl
-        uses: azure/setup-kubectl
+        uses: azure/setup-kubectl@v3
         with:
           version: 'v1.26.0' # equal to EKS-Cluster k8s version
-      - uses: azure/k8s-set-context@v4
+      - uses: azure/k8s-set-context@v3
         with:
           method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG }}
-      
+          kubeconfig: '${{ secrets.KUBECONFIG }}'
       - name: verify connection to k8s cluster
         run: | 
           kubectl version --short -o yaml
