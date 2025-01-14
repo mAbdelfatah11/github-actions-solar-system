@@ -67,9 +67,9 @@ jobs:
       permissions:
         packages: write
       runs-on: ubuntu-latest
-      # needs:
-      #   - code-coverage
-      #   - unit-testing
+      needs:
+        - code-coverage
+        - unit-testing
       steps:
         - uses: actions/checkout@v4
 
@@ -80,7 +80,7 @@ jobs:
             username: '${{ github.repository_owner }}'
             password: '${{ secrets.GITHUB_TOKEN }}'
 
-        # Ensure repository owner is lowercase
+        # Ensure repository owner is lowercase as github actions throws an error if we use this variable directly "github.repository_owner"
         - name: Prepare lowercase repository owner
           id: prepare
           run: echo "lowercase_owner=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
